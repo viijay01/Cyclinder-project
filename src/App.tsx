@@ -8,26 +8,27 @@ function App() {
     message: ""
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value });
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    fetch("https://formspree.io/f/myzpowqb", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+  fetch("https://formspree.io/f/your_form_id", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  })
+    .then(() => {
+      alert("Message sent successfully!");
+      setFormData({ name: "", phone: "", message: "" });
     })
-      .then(() => {
-        alert("Message sent successfully!");
-        setFormData({ name: "", phone: "", message: "" });
-      })
-      .catch(() => {
-        alert("Something went wrong. Please try again.");
-      });
-  };
+    .catch(() => {
+      alert("Something went wrong. Please try again.");
+    });
+};
+
 
   return (
     <div>
